@@ -8,6 +8,7 @@ import requests
 from datetime import datetime
 from colorama import *
 from urllib.parse import unquote
+import argparse
 
 init(autoreset=True)
 
@@ -19,12 +20,14 @@ hitam = Fore.LIGHTBLACK_EX
 reset = Style.RESET_ALL
 putih = Fore.LIGHTWHITE_EX
 
+
 class Data:
     def __init__(self, init_data, userid, username, secret):
         self.init_data = init_data
         self.userid = userid
         self.username = username
         self.secret = secret
+
 
 class PixelTod:
     def __init__(self):
@@ -69,14 +72,31 @@ class PixelTod:
             self.log(f'{kuning}Please fill / input your data to initdata.txt')
             sys.exit()
 
+        arg = argparse.ArgumentParser()
+        arg.add_argument('--marinkitagawa', action="store_true", help="no clear the terminal !")
+        arg.add_argument('--autobuy', action="store_true", help="Auto Buy Pet")
+        arg.add_argument('--autoupgrade', action="store_true", help="Auto Upgrade Pet")
+        arg.add_argument('--dailycombo', action="store_true", help="Daily Combo")
+        args = arg.parse_args()
+        if not args.marinkitagawa:
+            os.system("cls" if os.name == "nt" else "clear")
 
-        auto_buy_pet = input("Auto Buy Pet? (y/n): ").strip().lower() == 'y'
-        auto_upgrade_pet = input("Auto Upgrade Pet? (y/n): ").strip().lower() == 'y'
-        daily_combo = input("Daily Combo? (y/n): ").strip().lower() == 'y'
         id_pets = []
+        auto_buy_pet = False
+        auto_upgrade_pet = False
+        daily_combo = False
 
-        if daily_combo:
-            id_pets = input("Input ID Pet Daily Combo: (ex: 0a6306e5-cc33-401a-9664-a872e3eb2b71,78e0146f-0dfb-4af8-a48d-4033d3efdd39,8074e9c5-f6c2-4012-bfa2-bcc98ceb5175,dc5236dc-06be-456b-a311-cccedbd213ca)\n").strip().split(',')
+        if args.autobuy:
+            auto_buy_pet = True
+
+        if args.autoupgrade:
+            auto_upgrade_pet = True
+
+        if args.dailycombo:
+            daily_combo = True
+            id_pets = input(
+                "Input ID Pet Daily Combo: (ex: 0a6306e5-cc33-401a-9664-a872e3eb2b71,78e0146f-0dfb-4af8-a48d-4033d3efdd39,8074e9c5-f6c2-4012-bfa2-bcc98ceb5175,dc5236dc-06be-456b-a311-cccedbd213ca)\n").strip().split(
+                ',')
 
         print('~' * 50)
         while True:
@@ -126,13 +146,15 @@ class PixelTod:
                     res = requests.post(url, headers=headers, data=data)
                 else:
                     raise ValueError(f'Unsupported method: {method}')
-                
+
                 if res.status_code == 401:
                     self.log(f'{merah}{res.text}')
 
                 open('.http.log', 'a', encoding='utf-8').write(f'{res.text}\n')
                 return res
-            except (requests.exceptions.ConnectionError, requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout, requests.exceptions.Timeout):
+            except (
+            requests.exceptions.ConnectionError, requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout,
+            requests.exceptions.Timeout):
                 self.log(f'{merah}Connection error / connection timeout !')
                 continue
 
@@ -140,11 +162,11 @@ class PixelTod:
         url = 'https://api-clicker.pixelverse.xyz/api/users'
         headers = self.prepare_headers(data)
         res = self.api_call(url, None, headers)
-        
+
         if not res.text:
             self.log(f'{merah}Empty response from get_me API.')
             return
-        
+
         try:
             response_json = res.json()
             balance = response_json.get('clicksCount', 'N/A')
@@ -156,7 +178,7 @@ class PixelTod:
         url = 'https://api-clicker.pixelverse.xyz/api/daily-rewards'
         headers = self.prepare_headers(data)
         res = self.api_call(url, None, headers)
-        
+
         if not res.text:
             self.log(f'{merah}Empty response from daily reward API.')
             return
@@ -166,15 +188,15 @@ class PixelTod:
         except json.JSONDecodeError:
             self.log(f'{merah}Failed to decode JSON response from daily reward API. Response: {res.text}')
             return
-        
+
         if response_json.get('todaysRewardAvailable'):
             url_claim = 'https://api-clicker.pixelverse.xyz/api/daily-rewards/claim'
             res = self.api_call(url_claim, '', headers, method='POST')
-            
+
             if not res.text:
                 self.log(f'{merah}Empty response from daily reward claim API.')
                 return
-            
+
             try:
                 claim_response = res.json()
                 amount = claim_response.get('amount', 'N/A')
@@ -188,7 +210,7 @@ class PixelTod:
         url = "https://api-clicker.pixelverse.xyz/api/mining/progress"
         headers = self.prepare_headers(data)
         res = self.api_call(url, None, headers)
-        
+
         if not res.text:
             self.log(f'{merah}Empty response from mining progress API.')
             return
@@ -198,19 +220,19 @@ class PixelTod:
         except json.JSONDecodeError:
             self.log(f'{merah}Failed to decode JSON response from mining progress API. Response: {res.text}')
             return
-        
+
         available = response_json.get('currentlyAvailable', 0)
         min_claim = response_json.get('minAmountForClaim', float('inf'))
         self.log(f'{putih}Amount available : {hijau}{available}')
-        
+
         if available > min_claim:
             url_claim = 'https://api-clicker.pixelverse.xyz/api/mining/claim'
             res = self.api_call(url_claim, '', headers, method='POST')
-            
+
             if not res.text:
                 self.log(f'{merah}Empty response from claim API.')
                 return
-            
+
             try:
                 claim_response = res.json()
                 claim_amount = claim_response.get('claimedAmount', 'N/A')
@@ -233,7 +255,6 @@ class PixelTod:
                 self.log(f'{merah}Failed to decode JSON response from buy pet API.')
         else:
             self.log(f'{merah}Not yet time to buy another pet or Insufficient points')
-
 
     def auto_upgrade_pet(self, data: Data):
         url = 'https://api-clicker.pixelverse.xyz/api/pets'
@@ -262,7 +283,7 @@ class PixelTod:
         url_current_game = "https://api-clicker.pixelverse.xyz/api/cypher-games/current"
         headers = self.prepare_headers(data)
         res_current_game = self.api_call(url_current_game, None, headers)
-        
+
         if res_current_game.status_code == 200 and res_current_game.text:
             try:
                 game_data = res_current_game.json()
@@ -273,7 +294,8 @@ class PixelTod:
             if game_data['status'] == "ACTIVE":
                 game_id = game_data.get('id')
                 available_options = game_data.get('options', [])
-                pet_id_index_map = {option["optionId"]: len(available_options) - option["order"] - 1 for option in available_options}
+                pet_id_index_map = {option["optionId"]: len(available_options) - option["order"] - 1 for option in
+                                    available_options}
 
                 id_pets = [pet_id.strip() for pet_id in id_pets]
                 payload = {pet_id: len(id_pets) - id_pets.index(pet_id) - 1 for pet_id in id_pets}
@@ -310,6 +332,7 @@ class PixelTod:
     def log(self, message):
         now = datetime.now().isoformat(" ").split(".")[0]
         print(f"{hitam}[{now}]{reset} {message}")
+
 
 if __name__ == "__main__":
     try:

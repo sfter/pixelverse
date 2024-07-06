@@ -13,10 +13,10 @@ Special thanks to [@akasaid](https://github.com/akasakaid/pixelversexyzbot)
 
 ## Screenshot
 **Auto Upgrade Pet**  
-<img src="https://github.com/naufaljct48/pixelverse/blob/main/AutoUpgradePet.jpg" width="750">
+<img src="https://github.com/sfter/pixelverse/blob/main/AutoUpgradePet.jpg" width="750">
 
 **Daily Combo**  
-<img src="https://github.com/naufaljct48/pixelverse/blob/main/DailyCombo.jpg" width="750">
+<img src="https://github.com/sfter/pixelverse/blob/main/DailyCombo.jpg" width="750">
 
 # Registration
 
@@ -88,12 +88,20 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
    
    ```shell
    python bot.py
+   python bot.py --autobuy
+   python bot.py --autoupgrade
+   python bot.py --autobuy --autoupgrade
+   python bot.py --dailycombo
    ```
 
    Linux
 
    ```shell
    python3 bot.py
+   python3 bot.py --autobuy
+   python3 bot.py --autoupgrade
+   python3 bot.py --autobuy --autoupgrade
+   python3 bot.py --dailycombo
    ```
 
 # Pet List
