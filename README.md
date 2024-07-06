@@ -88,9 +88,13 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
    
    ```shell
    python bot.py
+   # 自动购买
    python bot.py --autobuy
+   # 自动升级
    python bot.py --autoupgrade
+   # 自动购买 & 自动升级
    python bot.py --autobuy --autoupgrade
+   # 每天的 4 个答案
    python bot.py --dailycombo
    ```
 
@@ -98,9 +102,13 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
 
    ```shell
    python3 bot.py
+   # 自动购买
    python3 bot.py --autobuy
+   # 自动升级
    python3 bot.py --autoupgrade
+   # 自动购买 & 自动升级
    python3 bot.py --autobuy --autoupgrade
+   # 每天的 4 个答案
    python3 bot.py --dailycombo
    ```
 
