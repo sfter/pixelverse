@@ -89,15 +89,23 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
    ```shell
    # 默认（只每日claim)
    python bot.py
+   # 后台运行
+   nohup python bot.py >> stdout.log &
    
    # 自动购买
    python bot.py --autobuy
+   # 后台运行
+   nohup python bot.py --autobuy >> stdout.log &
    
    # 自动升级
    python bot.py --autoupgrade
+   # 后台运行
+   nohup python bot.py --autoupgrade >> stdout.log &
    
    # 自动购买 & 自动升级
    python bot.py --autobuy --autoupgrade
+   # 后台运行
+   nohup python bot.py --autobuy --autoupgrade >> stdout.log &
    
    # 每天的 4 个答案
    python bot.py --dailycombo
@@ -108,18 +116,26 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
    ```shell
    # 默认（只每日claim)
    python3 bot.py
+   # 后台运行
+   nohup python3 bot.py >> stdout.log &
    
    # 自动购买
    python3 bot.py --autobuy
+   # 后台运行
+   nohup python3 bot.py --autobuy >> stdout.log &
    
    # 自动升级
    python3 bot.py --autoupgrade
+   # 后台运行
+   nohup python3 bot.py --autoupgrade >> stdout.log &
    
    # 自动购买 & 自动升级
    python3 bot.py --autobuy --autoupgrade
+   # 后台运行
+   nohup python3 bot.py --autobuy --autoupgrade >> stdout.log &
    
    # 每天的 4 个答案
-   python3 bot.py --dailycombo
+   python bot.py --dailycombo
    ```
 
 # Pet List
