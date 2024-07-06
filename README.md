@@ -28,7 +28,7 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
 
 2. Clone this repository
    ```shell
-   git clone https://github.com/naufaljct48/pixelverse.git
+   git clone https://github.com/sfter/pixelverse.git
    ```
 3. Go to pixelverse
    ```
