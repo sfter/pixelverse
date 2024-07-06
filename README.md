@@ -135,7 +135,7 @@ Start bot : [HERE](https://t.me/pixelversexyzbot?start=1007550735)
    nohup python3 bot.py --autobuy --autoupgrade >> stdout.log &
    
    # 每天的 4 个答案
-   python bot.py --dailycombo
+   python3 bot.py --dailycombo
    ```
 
 # Pet List
