@@ -100,25 +100,26 @@ class PixelTod:
 
         print('~' * 50)
         while True:
-            try:
                 for no, data in enumerate(datas):
-                    self.log(f'{hijau}Account Number : {putih}{no + 1}')
-                    data_parse = self.data_parsing(data)
-                    user = json.loads(data_parse['user'])
-                    userid = str(user['id'])
-                    first_name = user.get('first_name')
-                    last_name = user.get('last_name')
-                    username = user.get('username')
+                    try:
+                        self.log(f'{hijau}Account Number : {putih}{no + 1}')
+                        data_parse = self.data_parsing(data)
+                        user = json.loads(data_parse['user'])
+                        userid = str(user['id'])
+                        first_name = user.get('first_name')
+                        last_name = user.get('last_name')
+                        username = user.get('username')
 
-                    self.log(f'{hijau}Login as : {putih}{first_name} {last_name}')
-                    secret = self.get_secret(userid)
-                    new_data = Data(data, userid, username, secret)
-                    self.process_account(new_data, auto_buy_pet, auto_upgrade_pet, daily_combo, id_pets)
-                    print('~' * 50)
-                    self.countdown(self.INTERVAL_DELAY)
+                        self.log(f'{hijau}Login as : {putih}{first_name} {last_name}')
+                        secret = self.get_secret(userid)
+                        new_data = Data(data, userid, username, secret)
+                        self.process_account(new_data, auto_buy_pet, auto_upgrade_pet, daily_combo, id_pets)
+                        print('~' * 50)
+                        self.countdown(self.INTERVAL_DELAY)
+                    except BaseException as e:
+                        print(f"An error occurred: {e}")
+
                 self.countdown(self.DEFAULT_COUNTDOWN)
-            except BaseException as e:
-                print(f"An error occurred: {e}")
 
     def process_account(self, data, auto_buy_pet, auto_upgrade_pet, daily_combo, id_pets):
         self.get_me(data)
