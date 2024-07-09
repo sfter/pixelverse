@@ -116,6 +116,8 @@ class PixelTod:
                     self.process_account(new_data, auto_buy_pet, auto_upgrade_pet, daily_combo, id_pets)
                     print('~' * 50)
                     self.countdown(self.INTERVAL_DELAY)
+                except KeyboardInterrupt:
+                    sys.exit()
                 except BaseException as e:
                     print(f"An error occurred: {e}")
 
